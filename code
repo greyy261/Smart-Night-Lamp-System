@@ -1,0 +1,60 @@
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2); 
+
+const int pinLDR = A0;
+const int pinLED = 9;
+const int pinBtn = 2;
+
+bool sistemAktif = true;
+int lastBtnState = HIGH;
+
+void setup() {
+  pinMode(pinLED, OUTPUT);
+  pinMode(pinBtn, INPUT_PULLUP);
+  
+  Wire.begin();
+  lcd.init();
+  lcd.backlight();
+  
+  lcd.setCursor(0, 0);
+  lcd.print("UTS MIKROKONTROL");
+  lcd.setCursor(0, 1);
+  lcd.print("SMART NIGHT LAMP");
+  delay(2000);
+  lcd.clear();
+}
+
+void loop() {
+  int currentBtnState = digitalRead(pinBtn);
+  if (lastBtnState == HIGH && currentBtnState == LOW) {
+    sistemAktif = !sistemAktif;
+    delay(200);
+    lcd.clear();
+  }
+  lastBtnState = currentBtnState;
+
+  if (sistemAktif) {
+    int nilaiADC = analogRead(pinLDR);
+    int kecerahanLED = map(nilaiADC, 0, 1023, 255, 0);
+    if (kecerahanLED < 0) kecerahanLED = 0;
+    
+    analogWrite(pinLED, kecerahanLED);
+
+    lcd.setCursor(0, 0);
+    lcd.print("SISTEM: AKTIF   ");
+    lcd.setCursor(0, 1);
+    int persen = map(nilaiADC, 0, 1023, 0, 100);
+    lcd.print("CAHAYA: ");
+    lcd.print(persen);
+    lcd.print("%   ");
+  } else {
+    analogWrite(pinLED, 0);
+    lcd.setCursor(0, 0);
+    lcd.print("SISTEM: MATI    ");
+    lcd.setCursor(0, 1);
+    lcd.print("MODE: STANDBY   ");
+  }
+  delay(100);
+}
