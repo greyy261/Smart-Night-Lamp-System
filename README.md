@@ -32,4 +32,4 @@ Sistem ini mengintegrasikan tiga materi utama:
 
 ## 🎥 Dokumentasi
 - **Link Simulasi Tinkercad:** [https://www.tinkercad.com/things/230F2bY1WxK-smartlamp]
-- **Link Video Demo:** [[Tempel link YouTube/Google Drive video kamu di sini](https://drive.google.com/drive/folders/1sRZRREcBPHnNli6WhvZtpj6nNPZJWxAC?usp=drive_link)]
+- **Link Video Demo:** [(https://drive.google.com/drive/folders/1sRZRREcBPHnNli6WhvZtpj6nNPZJWxAC?usp=drive_link)]
